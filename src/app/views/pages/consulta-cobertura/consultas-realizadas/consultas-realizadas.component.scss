@@ -1,0 +1,8 @@
+.mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+  tr.mat-header-row, tr.mat-row {
+    display: flex;
+    }

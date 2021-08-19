@@ -1,0 +1,87 @@
+<mat-card class="col-sm-12 col-sm-10 col-lg-8 col-xl-6">
+    <div class="kt-form">
+        <div class="form-group">
+            <div class="row">
+
+
+
+                <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <input matInput type="text" placeholder="Nombre" [(ngModel)]="nuevoUsuario.nombre">
+                </mat-form-field>
+
+                <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <input matInput type="text" placeholder="Primer apellido" [(ngModel)]="nuevoUsuario.primerApellido">
+                </mat-form-field>
+
+
+                <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <input matInput type="text" placeholder="Segundo apellido" [(ngModel)]="nuevoUsuario.segundoApellido">
+                </mat-form-field>
+
+
+
+
+                <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <input matInput type="text" placeholder="DNI/NIE/Pasaporte (Opcional)" [(ngModel)]="nuevoUsuario.documentacion">
+                </mat-form-field>
+
+
+                <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <input matInput type="text" placeholder="email" [(ngModel)]="nuevoUsuario.email">
+                </mat-form-field>
+
+
+
+
+            </div>
+
+            <div class="row ">
+
+                <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <mat-select placeholder="Permisos" [(ngModel)]="nuevoUsuario.permisos" (selectionChange)="onChangePermisos()">
+                        <mat-option *ngFor="let rol of roles" [value]="rol.Rol">{{rol.Descripcion}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div class="row ">
+
+                <mat-form-field *ngIf="existeAgencia" class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                    <mat-select placeholder="Agencia" [(ngModel)]="nuevoUsuario.agencia" (selectionChange)="onChangeAgencia()">
+                        <mat-option *ngFor="let agencia of agencias" [value]="agencia.Agencia">{{agencia.Agencia}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+
+            <div class="row ">
+
+                <mat-form-field *ngIf="existeNuevaAgencia" class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+
+                    <input matInput type="text" placeholder="Nueva Agencia" [(ngModel)]="nuevoUsuario.NuevaAgencia">
+
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            <div class="row mt-2">
+                <div class="d-flex justify-content-start">
+                    <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="createUser()">Añadir usuario</button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</mat-card>
+
+
+<!--mat-card class="col-sm-12 col-lg-12 p-4">
+    <pre>{{ nuevoUsuario | json }}</pre>
+    </mat-card-->

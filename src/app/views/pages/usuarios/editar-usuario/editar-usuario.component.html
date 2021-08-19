@@ -1,0 +1,98 @@
+<mat-card class="col-sm-12 col-lg-6 p-4">
+    <div class="kt-form">
+        <div class="row">
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <input matInput type="text" [disabled]="true" placeholder="Usuario" [(ngModel)]="usuario.usuario">
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <input matInput type="text" [disabled]="!this.editable" placeholder="Nombre" [(ngModel)]="usuario.nombre">
+            </mat-form-field>
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <input matInput type="text" [disabled]="!this.editable" placeholder="Primer apellido" [(ngModel)]="usuario.primerApellido">
+            </mat-form-field>
+
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <input matInput type="text" [disabled]="!this.editable" placeholder="Segundo apellido" [(ngModel)]="usuario.segundoApellido">
+            </mat-form-field>
+
+
+
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <input matInput type="text" [disabled]="!this.editable" placeholder="DNI/NIE/Pasaporte" [(ngModel)]="usuario.documentacion">
+            </mat-form-field>
+
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <input matInput type="text" [disabled]="!this.editable" placeholder="email" [(ngModel)]="usuario.email">
+            </mat-form-field>
+
+        </div>
+
+        <div class="row ">
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <mat-select placeholder="Permisos" [disabled]="!this.editable" [(ngModel)]="usuario.permisos" (selectionChange)="onChangePermisos()">
+                    <mat-option *ngFor="let rol of roles" [value]="rol.Rol">{{rol.Descripcion}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="row ">
+
+            <mat-form-field *ngIf="existeAgencia" class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+                <mat-select placeholder="Agencia" [disabled]="!this.editable" [(ngModel)]="usuario.agencia" (selectionChange)="onChangeAgencia()">
+                    <mat-option *ngFor="let agencia of agencias" [value]="agencia.Agencia">{{agencia.Agencia}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div class="row ">
+
+            <mat-form-field *ngIf="existeNuevaAgencia" class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+
+                <input matInput type="text" placeholder="Nueva Agencia" [(ngModel)]="usuario.NuevaAgencia">
+
+            </mat-form-field>
+
+        </div>
+
+
+        <div class="row ">
+
+            <mat-form-field class="col-sm-12 col-sm-10 col-lg-8 col-xl-4">
+                <mat-select [disabled]="!this.editable" placeholder="Estado" [(ngModel)]="usuario.estado">
+                    <mat-option value="1">Activo</mat-option>
+                    <mat-option value="0">Inactivo</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row mt-2">
+            <div class="d-flex justify-content-start">
+                <button [disabled]="!this.editable" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="editUser()">Editar usuario</button>
+            </div>
+        </div>
+    </div>
+
+
+</mat-card>
+<br/>
+<mat-card class="col-sm-12 col-lg-6 p-4">
+
+    <mat-form-field class="col-sm-12 col-sm-10 col-lg-6 col-xl-4">
+        <input matInput type="text" [disabled]="!this.editable" placeholder="Nueva contaseña" [(ngModel)]="Nuevaspass">
+    </mat-form-field>
+
+    <div class="d-flex justify-content-start">
+        <button [disabled]="!this.editable" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="editPass()">Editar Contraseña</button>
+    </div>
+
+</mat-card>

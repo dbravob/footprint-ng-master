@@ -1,0 +1,22 @@
+kt-base {
+    opacity: 0;
+    height: 100%;
+    .kt-grid--root {
+        height: 100%;
+    }
+}
+
+.kt-page--loaded {
+    kt-base {
+        opacity: 1;
+        transition: opacity 1s ease-in-out;
+    }
+}
+
+#kt_content {
+    @media screen and (min-width: 1200px) {
+        background: url('../../../../assets/media/bg/bg-v-1.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}

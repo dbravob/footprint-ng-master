@@ -1,0 +1,28 @@
+<div ngbDropdown placement="bottom" autoClose="false" class="kt-header__topbar-item">
+	<div ngbDropdownToggle class="kt-header__topbar-wrapper" ngbTooltip="Incidencias">
+		<span class="kt-header__topbar-icon" [ngClass]="{'kt-pulse kt-pulse--brand': pulse, 'kt-pulse--light' : pulseLight, 'kt-header__topbar-icon--success' : iconType === 'success'	}">
+			<i *ngIf="!useSVG" [ngClass]="icon"></i>
+			<span *ngIf="useSVG" class="kt-svg-icon" [ngClass]="{'kt-svg-icon--success' : iconType === 'success'}" [inlineSVG]="icon"></span>
+			<span class="kt-pulse__ring" [hidden]="!pulse"></span>
+		</span>
+		<span class="kt-badge kt-badge--dot kt-badge--notify kt-badge--sm kt-badge--brand" [hidden]="!dot"></span>
+	</div>
+
+	<div ngbDropdownMenu aria-labelledby="dropdownForm1">
+		<form class="px-4 py-3">
+		  <div class="form-group">
+			<label for="exampleDropdownFormEmail1">Tipo de Notificación</label>
+			<select class="form-control" #message>
+				<option *ngFor="let sel of selectNoticias" [value]="sel.value">
+				  {{ sel.viewValue }}
+				</option>
+			</select>
+		  </div>
+		  <div class="form-group">
+			<label for="exampleDropdownFormPassword1">Comentario</label>
+			<textarea class="form-control" rows="3"#action></textarea>
+		  </div>
+		  <button mat-stroked-button (click)="openSnackBar(message.value, action.value)">Enviar</button>
+		</form>
+	  </div>
+</div>

@@ -1,0 +1,128 @@
+<mat-card class="col-sm-12 col-lg-12 mb-5">
+
+    <div class="example-container mt-3 ml-2 mr-2 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+                <input type="text" placeholder="Selecciona ..." aria-label="Number" [(ngModel)]="consulta.Provincia" matInput [formControl]="myControlProvincias" [matAutocomplete]="autoa" (keypress)="onProvinciaChanged($event)" (ngModelChange)="onProvinciaChanged($event)">
+                <mat-autocomplete #autoa="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsProvincia | async" [value]="option">{{option}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="example-container mt-3 ml-2 mr-2 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 ">
+                <input type="text" placeholder="Selecciona una población" aria-label="Number" [(ngModel)]="consulta.Poblacion" matInput [formControl]="myControlPoblaciones" [matAutocomplete]="auto" (keyup)="onPoblacionChanged()" (ngModelChange)="onPoblacionChanged()">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsPoblacion | async" [value]="option">{{option}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+    <div class="example-container mt-3 ml-2 mr-5 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+                <input type="text" placeholder="Selecciona una calle" aria-label="Number" [(ngModel)]="consulta.Calle" matInput [formControl]="myControlCalles" [matAutocomplete]="autoq">
+                <mat-autocomplete #autoq="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsCalle | async" [value]="option">{{option}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+    <div class="example-container mt-3 ml-2 mr-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+                <mat-form-field>
+                    <input type="number" matInput [(ngModel)]="consulta.Numero" placeholder="Introducce un número">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <re-captcha (resolved)="resolved($event)" siteKey="6LfgNt4ZAAAAAN51Uao1kgT2TGydE9EUNKmR0JX2"></re-captcha>
+
+    <div class="example-container mt-3 ml-2 mr-2">
+        <div class="row">
+            <div class="d-flex col-6 justify-content-center">
+                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="consultarCobertura()">Comprobar</button>
+            </div>
+            <div class="d-flex col-6 justify-content-center">
+                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="Limpiar()">Limpiar Campos</button>
+            </div>
+        </div>
+    </div>
+
+
+</mat-card>
+
+
+
+
+<mat-card class="col-sm-12 col-lg-12">
+    <kt-portlet>
+        <kt-portlet-header [title]="'Consultar Cobertura'" [class]="'kt-portlet__head--lg'">
+            <ng-container ktPortletTools>
+                <button mat-raised-button color="accent" matTooltip="Exportar datos" (click)="ExportTOExcel()">
+                            <mat-icon>file_download</mat-icon>  
+                        </button>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <div class="row">
+                <mat-form-field class="col-2">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Busca cualquier opción">
+                </mat-form-field>
+            </div>
+            <div class="mat-table__wrapper" #TABLE>
+                <mat-table #table [dataSource]="dataSource" matSort class="col-sm-12 col-lg-12 table table-responsive">
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="provincia">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Provincia</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.Provincia}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="poblacion">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Población</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.Poblacion}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nombreVia">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre via</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.Calle}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="numero">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Número</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.Numero}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_huella">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo huella</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.Huella}}</mat-cell>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="acceso">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Acceso</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.ACCESO}}</mat-cell>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </mat-table>
+
+            </div>
+
+            <!-- end: BOTTOM -->
+        </kt-portlet-body>
+        <!-- end::Body -->
+    </kt-portlet>
+</mat-card>
+
+<!--<mat-card class="col-sm-12 col-lg-12 p-4">
+    <pre>{{ consulta | json }}</pre>
+</mat-card>-->

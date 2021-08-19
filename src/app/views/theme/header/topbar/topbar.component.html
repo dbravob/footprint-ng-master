@@ -1,0 +1,11 @@
+<!-- begin:: Header Topbar -->
+<div class="kt-header__topbar">
+
+	<kt-forum *ngIf="supervisor" [pulse]="true" [skin]="'dark'" [icon]="'./assets/media/svg/icons/Communication/Group-chat.svg'" [useSVG]="true"></kt-forum>
+	<kt-chat-dropdown *ngIf="supervisor" [pulse]="true" [skin]="'dark'" [icon]="'./assets/media/svg/icons/Communication/Chat1.svg'" [useSVG]="true"></kt-chat-dropdown>
+	<kt-notification [bgImage]="'./assets/media/misc/bg-1.jpg'" [pulse]="true" [skin]="'dark'" [icon]="'./assets/media/svg/icons/Code/Compiling.svg'" [useSVG]="true"></kt-notification>
+	<!--begin: User bar -->
+	<kt-user-profile></kt-user-profile>
+	<!--end: User bar -->
+</div>
+<!-- end:: Header Topbar -->

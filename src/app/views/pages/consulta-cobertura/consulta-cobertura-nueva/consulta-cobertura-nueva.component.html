@@ -1,0 +1,232 @@
+<mat-card class="col-sm-12 col-lg-12 mb-5">
+
+    <div class="example-container mt-3 ml-2 mr-2 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+                <input type="text" placeholder="Selecciona una Provincia (*Obligatorio)" aria-label="Number" [(ngModel)]="consulta.Provincia" matInput [formControl]="myControlProvincias" [matAutocomplete]="autoa">
+                <mat-autocomplete #autoa="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsProvincia | async" [value]="option" (click)="onProvinciaChanged($event)">{{option}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="example-container mt-3 ml-2 mr-2 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 ">
+                <input type="text" placeholder="Selecciona una Ciudad (*Obligatorio)" aria-label="Number" [(ngModel)]="consulta.Poblacion" matInput [formControl]="myControlPoblaciones" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsPoblacion | async" [value]="option" (click)="onPoblacionChanged()">{{option}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+    <div class="example-container mt-3 ml-2 mr-5 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+                <input type="text" placeholder="Selecciona una Calle (*Obligatorio)" aria-label="Number" [(ngModel)]="consulta.Calle" matInput [formControl]="myControlCalles" [matAutocomplete]="autoq">
+                <mat-autocomplete #autoq="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsCalle | async" [value]="option" (click)="onCalleChange()">{{option}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="example-container mt-3 ml-2 mr-5 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+
+                <mat-select placeholder="Selecciona un número (*Opcional)" [(ngModel)]="consulta.Numero">
+
+                    <mat-option *ngFor="let Numero of listaNumeros" [value]="Numero.Numero" (click)="onNumeroChange()">{{Numero.Numero}}</mat-option>
+                </mat-select>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="example-container mt-3 ml-2 mr-5 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+
+                <mat-select placeholder="Selecciona un Piso (*Opcional)" [(ngModel)]="consulta.Piso">
+
+                    <mat-option *ngFor="let Piso of listaPisos" [value]="Piso.PISO" (click)="onPisoChange()">{{Piso.PISO}}</mat-option>
+                </mat-select>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="example-container mt-3 ml-2 mr-5 mb-5">
+        <div class="row">
+            <div class="d-flex col-12 justify-content-start">
+
+                <mat-select placeholder="Selecciona una Puerta (*Opcional)" [(ngModel)]="consulta.Puerta">
+
+                    <mat-option *ngFor="let Puerta of listaPuertas" [value]="Puerta.PUERTA">{{Puerta.PUERTA}}</mat-option>
+                </mat-select>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <re-captcha (resolved)="resolved($event)" siteKey="6LfgNt4ZAAAAAN51Uao1kgT2TGydE9EUNKmR0JX2"></re-captcha>
+
+    <div class="example-container mt-3 ml-2 mr-2">
+        <div class="row">
+            <div class="d-flex col-6 justify-content-center">
+                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="consultarCobertura()">Comprobar</button>
+            </div>
+            <div class="d-flex col-6 justify-content-center">
+                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="Limpiar()">Limpiar Campos</button>
+            </div>
+        </div>
+    </div>
+
+
+</mat-card>
+
+
+
+
+<mat-card class="col-sm-12 col-lg-12">
+    <kt-portlet>
+        <kt-portlet-header [title]="'Consultar Cobertura'" [class]="'kt-portlet__head--lg'">
+            <ng-container ktPortletTools>
+                <button mat-raised-button color="accent" matTooltip="Exportar datos" (click)="ExportTOExcel()">
+                            <mat-icon>file_download</mat-icon>  
+                        </button>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <div class="row">
+                <mat-form-field class="col-2">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Busca cualquier opción">
+                </mat-form-field>
+            </div>
+            <div class="mat-table__wrapper" #TABLE>
+                <mat-table #table [dataSource]="dataSource" matSort class="col-sm-12 col-lg-12 table table-responsive">
+                    <!-- ID Column -->
+
+
+
+                    <ng-container matColumnDef="X_ID_SCD">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>X_ID_SCD</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.X_ID_SCD}}</mat-cell>
+                    </ng-container>
+
+
+
+                    <ng-container matColumnDef="SERV_HFC">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>SERV_HFC</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.SERV_HFC}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SERV_FTTH">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>SERV_FTTH</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.SERV_FTTH}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SERV_NEBA">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>SERV_NEBA</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.SERV_NEBA}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="DENOMINACION">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>DENOMINACION</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.DENOMINACION}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CALLE">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>CALLE</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.CALLE}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="NUMERO">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>NUMERO</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.NUMERO}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ESCALERA">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>ESCALERA</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.ESCALERA}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PLANTA">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>PLANTA</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.PLANTA}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PUERTA">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>PUERTA</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.PUERTA}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CIUDAD">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>CIUDAD</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.CIUDAD}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PROVINCIA">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>PROVINCIA</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.PROVINCIA}}</mat-cell>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="COD_POSTAL">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>COD_POSTAL</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.COD_POSTAL}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="RECUENTO_CLIENTES">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>RECUENTO_CLIENTES</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.RECUENTO_CLIENTES}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CLIENTE_ACTIVO">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>CLIENTE_ACTIVO</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.CLIENTE_ACTIVO}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CLIENTE_ESTADO">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>CLIENTE_ESTADO</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.CLIENTE_ESTADO}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="AUTOIN">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>AUTOIN</mat-header-cell>
+                        <mat-cell *matCellDef="let consulta">{{consulta.Potencialmente_autoin}}</mat-cell>
+                    </ng-container>
+
+
+
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </mat-table>
+
+            </div>
+
+            <!-- end: BOTTOM -->
+        </kt-portlet-body>
+        <!-- end::Body -->
+    </kt-portlet>
+</mat-card>
+
+<!--<mat-card class="col-sm-12 col-lg-12 p-4">
+    <pre>{{ consulta | json }}</pre>
+</mat-card>-->

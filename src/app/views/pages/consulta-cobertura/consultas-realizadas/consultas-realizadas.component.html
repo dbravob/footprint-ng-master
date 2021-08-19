@@ -1,0 +1,114 @@
+<kt-portlet>
+    <kt-portlet-header [title]="'Consultas Realizadas'" [class]="'kt-portlet__head--lg'">
+
+
+    </kt-portlet-header>
+    <kt-portlet-body>
+
+        <div class="kt-form">
+            <div class="row">
+
+
+
+
+                <div class="d-flex col-sm-8 col-md-6 col-lg-4 justify-content-start">
+                    <mat-form-field class="mr-4">
+                        <input matInput [matDatepicker]="fechaInicio" placeholder="Fecha inicio" [(ngModel)]="getFiltros.fechaInicioValue">
+                        <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                        <mat-datepicker #fechaInicio></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex col-sm-8 col-md-6 col-lg-4 justify-content-start">
+                    <mat-form-field class="mr-4">
+                        <input matInput [matDatepicker]="fechaFin" placeholder="Fecha fin" [(ngModel)]="getFiltros.fechaFinValue">
+                        <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                        <mat-datepicker #fechaFin></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex col-sm-8 col-md-6 col-lg-4 justify-content-start">
+                    <mat-form-field class="mr-2">
+                        <mat-select placeholder="Agente" [(ngModel)]="getFiltros.selectedOptionAgente">
+
+                            <mat-option *ngFor="let Agente of listaUsuarios" [value]="Agente.ID">{{Agente.nombre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
+
+
+                <div class="d-flex col-sm-8 col-md-6 col-lg-4 justify-content-start">
+                    <div class="mr-3">
+                        <button class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="searchData()">Mostrar</button>
+                    </div>
+
+                    <div class="mr-3">
+                        <button class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="ExportTOExcel()" *ngIf="banderaViewData">Exportar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        Hay {{this.users.length}} consultas con los filtros seleccionados.
+        <mat-progress-bar mode="buffer" *ngIf="banderaViewSpinner"></mat-progress-bar>
+
+
+
+        <div class="mat-table__wrapper" #TABLE>
+            <mat-table #table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id_consulta">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> ID CONSULTA </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.id_consulta}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="fecha">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> FECHA </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.fecha}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="usuario">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.usuario}} </mat-cell>
+                </ng-container>
+
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="provincia">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> PROVINCIA </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.provincia}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="poblacion">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> POBLACION </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.poblacion}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="direccion">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> DIRECCION </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.direccion}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="numero">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> NUMERO </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.numero}} </mat-cell>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </mat-table>
+
+        </div>
+
+        <!-- end: BOTTOM -->
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>

@@ -1,0 +1,149 @@
+<kt-portlet>
+
+
+
+    <kt-portlet-header [title]="'Lista de usuarios'" [class]="'kt-portlet__head--lg'">
+
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="kt-form">
+            <div class="row">
+                <div class="d-flex col-sm-6 col-md-4 col-lg-3 justify-content-start">
+                    <mat-form-field class="mr-2">
+                        <mat-select placeholder="Agencia" [(ngModel)]="getFiltros.selectedOptionAgencia">
+                            <mat-option *ngFor="let agencia of agencias" [value]="agencia.Agencia">{{agencia.Agencia}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex col-sm-6 col-md-4 col-lg-3 justify-content-start">
+                    <mat-form-field class="mr-2">
+                        <mat-select placeholder="Rol" [(ngModel)]="getFiltros.selectedOptionRol">
+                            <mat-option *ngFor="let rol of roles" [value]="rol.Rol">{{rol.Descripcion}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex col-sm-6 col-md-4 col-lg-3 justify-content-start">
+                    <mat-form-field class="mr-2">
+                        <mat-select [(ngModel)]="getFiltros.selectedOptionEstado">
+                            <mat-option value="Todos" sel>Todos</mat-option>
+                            <mat-option value="Activo">Activo</mat-option>
+                            <mat-option value="Inactivo">Inactivo</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex col-sm-6 col-md-4 col-lg-3 justify-content-start">
+                    <mat-form-field class="mr-2">
+                        <input matInput placeholder="Dni/Email" [(ngModel)]="getFiltros.dniEmail">
+                    </mat-form-field>
+
+                </div>
+                <div class="d-flex col-sm-6 col-md-4 col-lg-3 justify-content-start">
+                    <div class="mr-2">
+                        <button class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="searchData()">Mostrar</button>
+                    </div>
+                </div>
+
+                <div class="d-flex col-sm-6 col-md-4 col-lg-3 justify-content-start">
+                    <div class="mr-3">
+                        <button class="btn btn-primary btn-elevate kt-login__btn-primary" (click)="ExportTOExcel()" *ngIf="banderaViewData">Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <mat-progress-bar mode="buffer" *ngIf="banderaViewSpinner"></mat-progress-bar>
+            <div class="mat-table__wrapper" #TABLE>
+                <mat-table #table [dataSource]="dataSource" class="col-sm-12 col-lg-12 table table-responsive">
+                    <ng-container matColumnDef="editar">
+                        <mat-header-cell *matHeaderCellDef> Editar</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-icon [routerLink]="['/usuarios/editar-usuario',row.id]">{{row.icon}}</mat-icon>
+                        </mat-cell>
+                    </ng-container>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="username">
+                        <mat-header-cell *matHeaderCellDef> USUARIO </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.usuario}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="agencia">
+                        <mat-header-cell *matHeaderCellDef> AGENCIA </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.agencia}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="rol">
+                        <mat-header-cell *matHeaderCellDef> ROL </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.rol}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef> EMAIL </mat-header-cell>
+                        <mat-cell style="width: 300px;" *matCellDef="let row"> {{row.mail}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nombre">
+                        <mat-header-cell *matHeaderCellDef> NOMBRE </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="apellido1">
+                        <mat-header-cell *matHeaderCellDef> PRIMER APELLIDO </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.apellido1}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="apellido2">
+                        <mat-header-cell *matHeaderCellDef> SEGUNDO APELLIDO </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.apellido2}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="dni">
+                        <mat-header-cell *matHeaderCellDef> DNI </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.dni}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pass">
+                        <mat-header-cell *matHeaderCellDef> CONTRASEÑA </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.pass}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="estado">
+                        <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.estado}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="ultima_conexion">
+                        <mat-header-cell *matHeaderCellDef> Ultima conexión </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.ultima_conexion}} </mat-cell>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </mat-table>
+
+            </div>
+        </div>
+
+
+
+
+        <!-- end: BOTTOM -->
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>
