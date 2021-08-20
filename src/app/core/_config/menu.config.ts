@@ -57,7 +57,7 @@ export class MenuConfig {
 			},
 			 
 			{
-				title: 'Consulta Cobertura',
+				title: 'Consultas',
 				root: true,
 				alignment: 'left',
 				toggle: 'click',
@@ -69,7 +69,7 @@ export class MenuConfig {
 						page: '/consulta-cobertura/consulta-cobertura',
 					},
 					{
-						title: 'Nuevo Consulta Cobertura',
+						title: 'Consulta Autoin',
 						bullet: 'dot',
 						page: '/consulta-cobertura/consulta-cobertura-nueva',
 					},
